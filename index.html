@@ -17,7 +17,7 @@
 
   <script>
     async function loadCodes() {
-      const res = await fetch("https://codes-api-rvy6.onrender.com/codes");
+      const res = await fetch("http://localhost:8080/codes");
       const data = await res.json();
       const list = document.getElementById("codes-list");
       list.innerHTML = "";
