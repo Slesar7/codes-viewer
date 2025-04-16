@@ -16,20 +16,29 @@
   <ul id="codes-list"></ul>
 
   <script>
-    async function loadCodes() {
+  async function loadCodes() {
+    try {
       const res = await fetch("http://localhost:8080/codes");
       const data = await res.json();
+      console.log("Полученные коды:", data.codes);
       const list = document.getElementById("codes-list");
       list.innerHTML = "";
-      data.codes.forEach(code => {
-        const li = document.createElement("li");
-        li.textContent = code;
-        list.appendChild(li);
-      });
+      if (data.codes.length === 0) {
+        list.innerHTML = "<li><i>Нет активных кодов</i></li>";
+      } else {
+        data.codes.forEach(code => {
+          const li = document.createElement("li");
+          li.textContent = code;
+          list.appendChild(li);
+        });
+      }
+    } catch (err) {
+      console.error("Ошибка при загрузке кодов:", err);
     }
+  }
 
-    loadCodes();
-    setInterval(loadCodes, 5000); // обновлять каждые 5 секунд
-  </script>
+  loadCodes();
+  setInterval(loadCodes, 5000);
+</script>
 </body>
 </html>
